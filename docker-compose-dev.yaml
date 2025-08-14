@@ -1,0 +1,28 @@
+services:
+  api:
+    build:
+      context: ./api
+      target: dev
+      dockerfile: Dockerfile
+    container_name: api
+    volumes:
+      - ./api:/var/www/html
+    ports:
+      - "8000:8000"
+      - "5173:5173"
+    environment:
+      - NODE_ENV=development
+
+  db:
+    image: postgres
+    restart: always
+    container_name: sentimental_db
+    environment:
+      - POSTGRES_USER=dev
+      - POSTGRES_PASSWORD=dev123
+      - POSTGRES_DB=sentimentalDev
+    ports:
+      - "5432:5432"
+
+volumes:
+  postgres_data:
